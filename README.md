@@ -2,7 +2,7 @@
 migrate sqlite to postgresql
 h1. Redmine sqlite to postgresql
 
-h2. Install necessary packages 
+## Install necessary packages 
 
 <pre><code class="text">
 apt-get install sqlite3 ruby ruby-dev make libsqlite3-dev libpq-dev postgresql pgloader  build-essential     
@@ -36,7 +36,7 @@ gem install rack -v 1.4.5
 gem install sqlite3 pg taps
 </code></pre>
 
-h2. Edit Gemfile
+## Edit Gemfile
 
 setup env variables http,https,ftp
 go to App file where Gemfile locate 
@@ -58,7 +58,7 @@ gem "taps"
 end
 </code></pre>
 
-h2. Update Gemfile
+## Update Gemfile
 
 change network setting to NAT
 
@@ -72,7 +72,7 @@ check all gem installed fine
 
 !bundle%20ins.PNG!
 
-h2. Create a role and database for migrate
+## Create a role and database for migrate
 
 Now switch to the postgres user and enter the PostgreSQL command prompt:
 
@@ -91,7 +91,7 @@ CREATE DATABASE redmine WITH ENCODING='UTF8' OWNER=redmine;
 exit
 </code></pre>
 
-h2. Authentication 
+## Authentication 
 
 <pre><code class="text">
 nano /etc/postgresql/10/main/pg_hba.conf
@@ -103,7 +103,7 @@ local   all             all                                     trust
 local   all             all                                     peer
 </code></pre>
 
-h2. Edit database.yml
+## Edit database.yml
 
 <pre><code class="text">
 nano /etc/redmine/default/database.yml
@@ -136,7 +136,7 @@ production:
   host: localhost
 </code></pre>
 
-h2. Migrate 
+## Migrate 
 
 *db:migrate* runs (single) migrations that have not run yet.
 *db:setup* does db:create, db:schema:load, db:seed
@@ -147,7 +147,7 @@ rake db:migrate
 rake db:setup
 </code></pre>
 
-h3.  Or using sequel
+###  Or using sequel
 
 Before using sequel please drop psql database
 
@@ -172,13 +172,13 @@ sequel -C sqlite:/tmp/redmine_backupdb.sqlite3 postgres://postgres:"12345678"@lo
 pgloader --with "data only"  /tmp/redmine_backupdb.sqlite3  postgresql://postgres:"12345678"@localhost/projectportal
 </code></pre>
 
-h2. Alter table tokens 
+## Alter table tokens 
 
 for easy step  go to phppgadmin
 token -> alter column *created_on* and *updated_on* -> *timestamp without time zone
 *
 
-h2. Load postgres db with data from sqlite  
+## Load postgres db with data from sqlite  
 
 pgLoader is a program that can load data into a PostgreSQL database from a variety of different sources
 <pre><code class="text">
@@ -197,7 +197,7 @@ please check  Reset Sequences
 service apache2 restart
 </code></pre>
 
-h3. For confirmation 
+### For confirmation 
 
 <pre><code class="text">
 su postgres
@@ -226,7 +226,7 @@ if you see any 00 end of the column created_on and updated_on +that means not al
 exit
 </code></pre>
 
-h2. Re- login
+### Re- login
 
 go to redmine information page you can find  
 <pre><code class="xml">
@@ -241,9 +241,9 @@ Database adapter               PostgreSQL
 
 
 
-h2. ---------------------------The End------------------------------------------
+# ---------------------------The End------------------------------------------
 
-h2. Sqlite queries 
+## Sqlite queries 
 
 <pre><code class="text">
 sqlite3 redmine.sqlite3
@@ -256,7 +256,7 @@ select * from table_name; # view table data
 
 </code></pre>
 
-h2. Psql queries
+## Psql queries
 
 <pre><code class="text">
 su postgres
