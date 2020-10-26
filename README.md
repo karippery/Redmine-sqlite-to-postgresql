@@ -1,4 +1,4 @@
-# sqlite-to-postgresql
+# redmine sqlite database-to-postgresql
 migrate sqlite to postgresql
 h1. Redmine sqlite to postgresql
 
